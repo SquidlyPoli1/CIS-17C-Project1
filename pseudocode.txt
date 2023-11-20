@@ -1,0 +1,70 @@
+Creating deck:
+- A two-dimensional list. Yes I'm sure this is something that can really be done. Stop asking me
+- Read (blank) sublist element from master list
+- Determine card type:
+  - If element 1, set to Spade
+  - If element 2, set to Heart
+  - If element 3, set to Club
+  - If element 4, set to Diamond
+- Determine card ID:
+  - If under 8, create stringstream with any number above 2, accompanied by a fake 0
+  - If 8, set ID string to 10
+  - If 9, set ID string to JK (Jack)
+  - If 10, set ID string to KN (King)
+  - If 11, set ID string to QN (Queen)
+  - If 12, set ID string to AC (Ace)
+- Push card element back to sublist
+
+Creating player/CPU deck:
+- Read cards from master deck
+- Draw one random card (no queens) from master deck and search if it is already in player deck
+- If not in player deck, add card to deck
+- If in player deck, skip
+- Shuffle final deck
+- Return final deck
+
+Main
+- Greet player ("Welcome to Old Maid!")
+- Three choices for player:
+  - 1 starts up a game
+  - 2 provides a basic explanation of the rules (as it can get with these CLI thingies)
+  - 3 exits the program
+
+Playing the game
+- Initialize master deck
+- Remove one queen from master deck (51 card deck)
+- Initialize player deck
+- Initialize CPU deck
+- Set turns to 0
+- Loop until end of game as needed:
+  - Show player cards
+  - Show CPU cards
+  - Call player turn function if even number
+  - Call CPU turn function if odd number
+  - Increment turn value
+- Declare winner:
+  - If player only has odd queen, CPU wins
+  - If CPU only has odd queen, player wins
+  - If player has three unpairable cards, CPU wins
+  - If CPU has three unpairable cards, player wins
+- Ask to play again
+  - If yes, start game again
+  - If no, quit program
+
+Typical turn (player)
+- Ask player for cards to remove (from beginning of deque)
+- Remove specified cards, or dont if the same card is called
+- Draw card from opponent
+- Ask to swap
+  - If yes, swap player deck and CPU deck
+  - If no, leave decks as-is
+- End turn
+
+Typical turn (CPU)
+- Run CPU turn logic (loop checks for pairs)
+- Remove specified cards, or dont if the same card is called
+- Draw card from opponent
+- Randomize swap outcome with low chances
+  - If wants to swap, swap player deck and CPU deck
+  - If does not want to swap, leave decks as-is
+- End turn

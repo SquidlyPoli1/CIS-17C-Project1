@@ -1,0 +1,73 @@
+cd 'C:\Users\SquidlyPoli1\Documents\NetBeansProjects\CIS-17C-Project1'
+C:\cygwin64\bin\make.exe -f Makefile CONF=Debug
+"/usr/bin/make" -f nbproject/Makefile-Debug.mk QMAKE= SUBPROJECTS= .build-conf
+make[1]: Entering directory '/cygdrive/c/Users/SquidlyPoli1/Documents/NetBeansProjects/CIS-17C-Project1'
+"/usr/bin/make"  -f nbproject/Makefile-Debug.mk dist/Debug/Cygwin-Windows/cis-17c-project1.exe
+make[2]: Entering directory '/cygdrive/c/Users/SquidlyPoli1/Documents/NetBeansProjects/CIS-17C-Project1'
+mkdir -p build/Debug/Cygwin-Windows
+rm -f "build/Debug/Cygwin-Windows/card.o.d"
+gcc    -c -g -MMD -MP -MF "build/Debug/Cygwin-Windows/card.o.d" -o build/Debug/Cygwin-Windows/card.o card.cpp
+In file included from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_algobase.h:71,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/char_traits.h:39,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ios:40,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ostream:38,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/iostream:39,
+                 from card.h:14,
+                 from card.cpp:14:
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/predefined_ops.h: In instantiation of 'bool __gnu_cxx::__ops::_Iter_equals_val<_Value>::operator()(_Iterator) [with _Iterator = std::_Deque_iterator<card, card&, card*>; _Value = const card]':
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_algobase.h:2069:14:   required from '_RandomAccessIterator std::__find_if(_RandomAccessIterator, _RandomAccessIterator, _Predicate, std::random_access_iterator_tag) [with _RandomAccessIterator = std::_Deque_iterator<card, card&, card*>; _Predicate = __gnu_cxx::__ops::_Iter_equals_val<const card>]'
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_algobase.h:2114:23:   required from '_Iterator std::__find_if(_Iterator, _Iterator, _Predicate) [with _Iterator = std::_Deque_iterator<card, card&, card*>; _Predicate = __gnu_cxx::__ops::_Iter_equals_val<const card>]'
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_algo.h:3884:28:   required from '_IIter std::find(_IIter, _IIter, const _Tp&) [with _IIter = std::_Deque_iterator<card, card&, card*>; _Tp = card]'
+card.h:56:23:   required from here
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/predefined_ops.h:270:24: error: no match for 'operator==' (operand types are 'card' and 'const card')
+  270 |         { return *__it == _M_value; }
+      |                  ~~~~~~^~~~~~~~~~~
+In file included from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_algobase.h:67,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/char_traits.h:39,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ios:40,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ostream:38,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/iostream:39,
+                 from card.h:14,
+                 from card.cpp:14:
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_iterator.h:1121:5: note: candidate: 'template<class _IteratorL, class _IteratorR, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_IteratorL, _Container>&, const __gnu_cxx::__normal_iterator<_IteratorR, _Container>&)'
+ 1121 |     operator==(const __normal_iterator<_IteratorL, _Container>& __lhs,
+      |     ^~~~~~~~
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_iterator.h:1121:5: note:   template argument deduction/substitution failed:
+In file included from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_algobase.h:71,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/char_traits.h:39,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ios:40,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ostream:38,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/iostream:39,
+                 from card.h:14,
+                 from card.cpp:14:
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/predefined_ops.h:270:24: note:   'card' is not derived from 'const __gnu_cxx::__normal_iterator<_IteratorL, _Container>'
+  270 |         { return *__it == _M_value; }
+      |                  ~~~~~~^~~~~~~~~~~
+In file included from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_algobase.h:67,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/char_traits.h:39,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ios:40,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ostream:38,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/iostream:39,
+                 from card.h:14,
+                 from card.cpp:14:
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_iterator.h:1129:5: note: candidate: 'template<class _Iterator, class _Container> bool __gnu_cxx::operator==(const __gnu_cxx::__normal_iterator<_Iterator, _Container>&, const __gnu_cxx::__normal_iterator<_Iterator, _Container>&)'
+ 1129 |     operator==(const __normal_iterator<_Iterator, _Container>& __lhs,
+      |     ^~~~~~~~
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_iterator.h:1129:5: note:   template argument deduction/substitution failed:
+In file included from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/stl_algobase.h:71,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/char_traits.h:39,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ios:40,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/ostream:38,
+                 from /usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/iostream:39,
+                 from card.h:14,
+                 from card.cpp:14:
+/usr/lib/gcc/x86_64-pc-cygwin/11/include/c++/bits/predefined_ops.h:270:24: note:   'card' is not derived from 'const __gnu_cxx::__normal_iterator<_Iterator, _Container>'
+  270 |         { return *__it == _M_value; }
+      |                  ~~~~~~^~~~~~~~~~~
+make[2]: *** [nbproject/Makefile-Debug.mk:69: build/Debug/Cygwin-Windows/card.o] Error 1
+make[2]: Leaving directory '/cygdrive/c/Users/SquidlyPoli1/Documents/NetBeansProjects/CIS-17C-Project1'
+make[1]: *** [nbproject/Makefile-Debug.mk:60: .build-conf] Error 2
+make[1]: Leaving directory '/cygdrive/c/Users/SquidlyPoli1/Documents/NetBeansProjects/CIS-17C-Project1'
+make: *** [nbproject/Makefile-impl.mk:40: .build-impl] Error 2
+
+BUILD FAILED (exit value 2, total time: 4s)
