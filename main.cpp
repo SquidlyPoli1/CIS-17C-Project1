@@ -39,6 +39,7 @@ void swapDeck(deckPlayer&,deckMaster&);
 void testyyy();
 void rules();
 string random_rank(int);
+int det_rank(string);
 
 int main() {
     //Init random seed
@@ -70,11 +71,11 @@ int main() {
             p1_score++;
         }
         //Ask for rematch
-        while (trya != 'Y' && trya != 'y' && trya != 'N' && trya != 'n') {
+        while (toupper(trya) != 'Y' && toupper(trya) != 'N') {
             cout << "Game count: " << p1_score << "-" << p2_score << endl;
             cout << "Try again? (Y or N): ";
             cin >> trya;
-            if (trya != 'Y' && trya != 'y' && trya != 'N' && trya != 'n')
+            if (toupper(trya) != 'Y' && toupper(trya) != 'N')
                 cout << "Please enter a valid option and try again." << endl;
         }
         cin.ignore();
@@ -198,6 +199,7 @@ void testyyy() {
     card cpu_max= cpu.maxCard();
     card cpu_min = cpu.minCard();
     
+    cout << det_rank(player_max.ID) << det_rank(player_min.ID) << endl;
     cout << "Min of Player deck is " << player_min.type << player_min.ID << endl;
     cout << "Max of Player deck is " << player_max.type << player_max.ID << endl;
     cout << "Min of CPU deck is " << cpu_min.type << cpu_min.ID << endl;
@@ -212,30 +214,31 @@ int game (deckMaster &deck, deckPlayer &player, deckPlayer &cpu) {
     int test_size1 = player.size(), test_size2 = cpu.size();
     int numbey1 = 0,numbey2 = 0;
     char swapch;
-    do {
+    while((meid1 != 1 && meid2 != 1 && unp1 != 1 && unp2 != 1) && (test_size1 >= 1 && test_size2 >= 1)) {
+        //Determine card sizes
+        test_size1 = player.size();
+        test_size2 = cpu.size();
+        //Determine if player has only Maid
+        meid1 = player.maid();
+        meid2 = cpu.maid();
+        //Determine if cards are unpaired
+        unp1 = player.meido_un();
+        unp2 = cpu.meido_un();
         if (meid1 != 1 && meid2 != 1 && unp1 != 1 && unp2 != 1) {
-            //Determine card sizes
-            test_size1 = player.size();
-            test_size2 = cpu.size();
-            //Determine if player has only Maid
-            meid1 = player.maid();
-            meid2 = cpu.maid();
-            //Determine if cards are unpaired
-            unp1 = player.meido_un();
-            unp2 = cpu.meido_un();
             cout << "Player Cards" << endl;
             player.prntDeck();
             cout << endl;
             cout << "CPU Cards" << endl;
             cpu.prntDeck();
             cout << endl;
-            if (turns % 2 == 0) {
+            if (turns % 2 == 0 && player.meido_un() != 1 && cpu.meido_un() != 1) {
                 turns += turn_plr(deck,player,cpu); //First turn is player turn
             }
             cout << endl;
-            if (turns % 2 == 1) {
+            if (turns % 2 == 1 && player.meido_un() != 1 && cpu.meido_un() != 1) {
                 turns += turn_cpu(deck,player,cpu); //Second turn is CPU turn
             }
+            if (player.meido_un() != 1 && cpu.meido_un() != 1) {
             cout << endl;
             cout << "Player Cards" << endl;
             player.prntDeck();
@@ -255,30 +258,32 @@ int game (deckMaster &deck, deckPlayer &player, deckPlayer &cpu) {
                     cout << "Enter a valid option and try again." << endl;
                 }
             } while (swapch != 'Y' && swapch != 'y' && swapch != 'N' && swapch != 'n');
+            }
         }
         else {
-            if (meid1 == 1 && test_size1 == 1) {
-                cout << "You have only the odd queen left, so you became the Old Maid!\nYou lose." << endl;
-                return 2;
-            }
-            else if (meid2 == 1 && test_size2 == 1) {
-                cout << "The CPU has only the odd queen left, and they became the Old Maid!\nYou win!" << endl;
-                return 1;
-            }
-            else if (meid1 != 1 && test_size1 > 1) {
-                cout << "You have three unpaired cards, and you became the Old Maid!\nYou lose.";
-                return 2;
-            }
-            else if (meid2 != 1 && test_size1 > 1) {
-                cout << "The CPU has three unpaired cards, and they became the Old Maid!\nYou win!" << endl;
-                return 1;
-            }
-            //Poor stalemate
-            else {
-                cout << "Somebody goofed. whoops." << endl;
-            }
+            break;
         }
-    } while((meid1 != 1 && meid2 != 1 && unp1 != 1 && unp2 != 1) && (test_size1 >= 1 && test_size2 >= 1));
+    };
+    if (meid1 == 1 && test_size1 == 1) {
+        cout << "You have only the odd queen left, so you became the Old Maid!\nYou lose." << endl;
+        return 2;
+    }
+    else if (meid2 == 1 && test_size2 == 1) {
+        cout << "The CPU has only the odd queen left, and they became the Old Maid!\nYou win!" << endl;
+        return 1;
+    }
+    else if (meid1 != 1 && test_size1 > 1) {
+        cout << "You have three unpaired cards, and you became the Old Maid!\nYou lose." << endl;
+        return 2;
+    }
+    else if (meid2 != 1 && test_size1 > 1) {
+        cout << "The CPU has three unpaired cards, and they became the Old Maid!\nYou win!" << endl;
+        return 1;
+    }
+    //Poor stalemate
+    else {
+        cout << "Somebody goofed. whoops." << endl;
+    }
     return -1;
 }
 
@@ -314,6 +319,7 @@ int turn_plr(deckMaster &master, deckPlayer &plr, deckPlayer &opp) {
     cout << endl;
     char drawch;
     //Prompt player to draw card
+    if (plr.size() >= 3 && plr.meido_un() != 1) {
     do {
         cout << "Draw card? (Y or N): ";
         cin >> drawch;
@@ -325,6 +331,7 @@ int turn_plr(deckMaster &master, deckPlayer &plr, deckPlayer &opp) {
             cout << "Enter a valid option and try again." << endl;
         }
     } while (drawch != 'Y' && drawch != 'y' && drawch != 'N' && drawch != 'n');
+    }
     cin.ignore();
     cin.clear();
     return 1;
@@ -341,7 +348,7 @@ int turn_cpu(deckMaster &master, deckPlayer &plr, deckPlayer &opp) {
     else {
         drawch = 'N';
     }
-    if (drawch == 'Y' || drawch == 'y') {
+    if ((toupper(drawch) == 'Y') || (toupper(drawch) == 'N' && rand() % 2 == 1)) {
         card draw = drawCard(plr,opp);
         cout << "CPU drew card " << draw.type << draw.ID << " from player deck" << endl;
     }
@@ -352,26 +359,19 @@ int turn_cpu(deckMaster &master, deckPlayer &plr, deckPlayer &opp) {
 int retPair_AI(deckMaster &master, deckPlayer &plr) {
     string rank; //Random rank
     int true2 = -1,testyt;
+    int count = 0;
     map<int,int> ringos; //These are the two values for the cards drawn
-    while (true2 != 1 && plr.size() > 1) {
-        rank = random_rank(rand() % 13); //Figure out which rank to use
-        //Set both cards to draw as an invalid value
-        ringos[0] = -1;
+    while (true2 != 1 && plr.size() > 3 && count < plr.size()) {
+        //Set first card node to a random card in deck
+        ringos[0] = (rand() % plr.size());
         ringos[1] = -1;
-        if (rank >= plr.minCard().ID && rank <= plr.maxCard().ID) {
+        //Check if the rank is actually found, then find another
+        if (ringos[0] != -1) {
             for(int i = 0; i < plr.size(); i++) {
                 card testx = plr.retCard(i); //Test X is the card at the current spot
-                card testy,testz;
-                //This sets the first card to draw based on the rank
-                if ((!ringos[0] || ringos[0] == -1) && testx.ID == rank) {
-                    ringos[0] = i;
-                }
-                //If there is a valid first value, determine next value
-                if (ringos[0] != -1 && i != ringos[0]) {
-                    testy = plr.retCard(ringos[0]);
-                    if ((!ringos[1] || ringos[1] == -1) && testx.ID == testy.ID) {
-                        ringos[1] = i;
-                    }
+                card testy = plr.retCard(ringos[0]); //Test Y is the card at the spot where the ID was found first
+                if (i != ringos[0] && (!ringos[1] || ringos[1] == -1) && testx.ID == testy.ID) {
+                    ringos[1] = i;
                 }
             }
             //If both IDs are equal, return cards
@@ -382,10 +382,9 @@ int retPair_AI(deckMaster &master, deckPlayer &plr) {
             else {
                 ringos[0] = -1;
                 ringos[1] = -1;
-                true2 = -1;
             }
         }
-        //cout << ringos[0] << " " << ringos[1] << endl;
+        count++;
     }
     //Return cards
     if (true2 == 1) {
@@ -400,17 +399,35 @@ int retPair_AI(deckMaster &master, deckPlayer &plr) {
     return testyt;
 }
 
+int det_rank(string leme) {
+    int numer = 0;
+    if (leme == "JK")
+        numer = 10;
+    else if (leme == "KN")
+        numer = 11;
+    else if (leme == "QN")
+        numer = 12;
+    else if (leme == "AC")
+        numer = 9;
+    //Everything else
+    else if (leme <= "10") {
+        numer = stoi(leme);
+        numer = numer - 2;
+    }
+    return numer;
+}
+
 string random_rank(int numer) {
     string leme;
     if (numer == 8)
         leme = "10";
-    else if (numer == 9)
-        leme = "JK"; //Jack
     else if (numer == 10)
+        leme = "JK"; //Jack
+    else if (numer == 11)
         leme = "KN"; //King
-    else if (numer >= 11)
-        leme = "QN"; //Queen
     else if (numer >= 12)
+        leme = "QN"; //Queen
+    else if (numer >= 9)
         leme = "AC"; //Ace
     //Everything else
     else {
@@ -469,18 +486,29 @@ deckPlayer createPlr(deckMaster &master) {
     return newdick;
 }
 
+//Drawing function
 card drawCard(deckPlayer &cpu, deckPlayer &plr) {
     card newcard;
     int randy,i = 0, test = 0;
-    while(test != 1) {
-        randy = (rand() % 12);
-        newcard = cpu.retCard(randy);
-        if(plr.srcDeck(newcard) == -1) {
-            plr.crtCard(cpu.ersCard(randy));
-            test = 1;
+    bool match = false;
+    
+    while (!match && i < cpu.size()) {
+        newcard = cpu.retCard(i);
+        
+        if (plr.srcDeck(newcard) != -1) {
+            match = true;
         }
-        else test = 0;
-        i++;
+        else {
+            i++;
+        }
+    }
+    if (match == true) {
+        plr.crtCard(cpu.ersCard(i));
+    }
+    else {
+        randy = (rand() % cpu.size());
+        newcard = cpu.retCard(randy);
+        plr.crtCard(cpu.ersCard(randy));
     }
     return newcard;
 }
