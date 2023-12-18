@@ -76,6 +76,7 @@ class deckPlayer {
     }
     int srcDeck(card);
     void swpDeck(deckPlayer&);
+    int find_ID(string);
     int size() {
         int size = PlrDeck.size();
         return size;
