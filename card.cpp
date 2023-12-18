@@ -185,6 +185,25 @@ card deckPlayer::retCard(int i) {
     return valie;
 }
 
+int deckPlayer::find_ID(string val) {
+    //Define necessary  variables
+    card valie;
+    int a;
+    
+    //Define iterators
+    deque<card>::iterator it;
+    
+    //Loop until int elements are found
+    for(it = PlrDeck.begin(); it != PlrDeck.end(); ++it) {
+        valie = *it;
+        if (valie.ID == val) {
+            return a;
+        }
+        a++;
+    }
+    return -1;
+}
+
 card deckPlayer::ersCard(int i) {
     //Define necessary  variables
     int a = 0;
@@ -225,21 +244,21 @@ void deckPlayer::swpDeck(deckPlayer &other) {
     swap(PlrDeck,other.PlrDeck); //Simply use the swap algorithm lol
 }
 
+//Function to call whether or not there are a bunch of unpaired cards in a deck
 int deckPlayer::meido_un() {
-    int instances = 0;
-    if (PlrDeck.size() == 3) {
-        if (retCard(0).ID != retCard(1).ID) {
-            instances++;
+    for(int i = 0; i < size(); i++) {
+        int paired = -1;
+        card exCard = retCard(i);
+        for(int j = 0; j < size(); j++) {
+            card enCard = retCard(j);
+            if ((enCard.ID == exCard.ID) && (enCard.type != exCard.type)) {
+                paired = 1;
+                break;
+            }
         }
-        if (retCard(1).ID != retCard(2).ID) {
-            instances++;
-        }
-        if (retCard(2).ID != retCard(0).ID) {
-            instances++;
+        if (paired == -1 && exCard.ID != "QN") {
+            return -1;
         }
     }
-    if (instances >= 3) {
-        return 1;
-    }
-    return -1;
+    return 1;
 }
